@@ -8,7 +8,6 @@ import {
   StyleSheet,
   Platform,
   ViewPropTypes,
-  I18nManager,
 } from 'react-native';
 
 import RN from 'react-native/package.json';
@@ -352,6 +351,7 @@ export default class TextField extends PureComponent {
       containerStyle,
       inputContainerStyle: inputContainerStyleOverrides,
       clearTextOnFocus,
+      StarTag,
       ...props
     } = this.props;
 
@@ -369,10 +369,6 @@ export default class TextField extends PureComponent {
     let active = !!(value || props.placeholder);
     let count = value.length;
     let restricted = limit < count;
-
-    let textAlign = I18nManager.isRTL?
-      'right':
-      'left';
 
     let borderBottomColor = restricted?
       errorColor:
@@ -397,13 +393,12 @@ export default class TextField extends PureComponent {
         { borderBottomColor, borderBottomWidth }),
 
       ...(props.multiline?
-        { height: 'web' === Platform.OS ? 'auto' : labelHeight + inputContainerPadding + height }:
+        { height: labelHeight + inputContainerPadding + height }:
         { height: labelHeight + inputContainerPadding + fontSize * 1.5 }),
     };
 
     let inputStyle = {
       fontSize,
-      textAlign,
 
       color: (disabled || defaultVisible)?
         baseColor:
@@ -511,7 +506,7 @@ export default class TextField extends PureComponent {
         <Animated.View {...inputContainerProps}>
           {disabled && <Line {...lineProps} />}
 
-          <Label {...labelProps}>{label}</Label>
+          <Label {...labelProps}>{label} {StarTag}</Label>
 
           <View style={styles.row}>
             {this.renderAffix('prefix', active, focused)}
