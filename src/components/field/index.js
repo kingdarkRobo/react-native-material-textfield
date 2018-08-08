@@ -417,6 +417,8 @@ export default class TextField extends PureComponent {
     };
 
     let errorStyle = {
+      ...labelTextStyle,
+
       color: errorColor,
 
       opacity: focus.interpolate({
